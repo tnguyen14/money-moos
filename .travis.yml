@@ -1,13 +1,10 @@
 sudo: false
-
 language: node_js
 node_js:
-- '6'
-
+- '8'
 cache:
   directories:
   - "$HOME/google-cloud-sdk"
-
 before_deploy:
 # these steps are copied from 
 # https://www.drzon.net/posts/automatic-deployments-to-google-cloud-functions-with-travis-ci/
