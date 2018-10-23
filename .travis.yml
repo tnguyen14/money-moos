@@ -1,0 +1,36 @@
+sudo: false
+
+language: node_js
+node_js:
+- '6'
+
+cache:
+  directories:
+  - "$HOME/google-cloud-sdk"
+
+before_deploy:
+# these steps are copied from 
+# https://www.drzon.net/posts/automatic-deployments-to-google-cloud-functions-with-travis-ci/
+
+# disable prompt when installing SDK
+- if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+# add gcloud to PATH
+- source /home/travis/google-cloud-sdk/path.bash.inc
+- gcloud version
+
+# is this needed?
+# - gcloud --quiet components update
+
+# travis encrypt-file credentials/money-moos-535301e4904d.json
+# https://docs.travis-ci.com/user/encrypting-files/
+- openssl aes-256-cbc -K $encrypted_6a1c88c73232_key -iv $encrypted_6a1c88c73232_iv -in credentials/money-moos-535301e4904d.json.enc -out credentials/money-moos-535301e4904d.json -d
+- gcloud auth activate-service-account --key-file credentials/money-moos-535301e4904d.json
+- gcloud config set project money-moos
+
+
+deploy:
+- provider: script
+  script: bash bin/deploy.sh
+  skip_cleanup: true
+  on:
+    branch: master
