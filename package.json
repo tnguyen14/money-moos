@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/tnguyen14/money-moos#readme",
   "dependencies": {
-    "@google-cloud/firestore": "^0.18.0"
+    "@google-cloud/firestore": "^0.18.0",
+    "dotenv": "^6.1.0"
   },
   "devDependencies": {
     "sinon": "^7.0.0",
