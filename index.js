@@ -1,3 +1,3 @@
 require('dotenv').config();
 
-exports.messeger = require('./lib/messenger');
+exports.messenger = require('./lib/messenger');
